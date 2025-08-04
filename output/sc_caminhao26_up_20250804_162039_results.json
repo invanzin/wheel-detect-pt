@@ -1,0 +1,74 @@
+{
+    "total_axles": 3,
+    "lifted_axles": 0,
+    "total_wheels": 3,
+    "output_path": "output\\sc_caminhao26_up_20250804_162039.jpg",
+    "ground_line_slope": 0.419924733430901,
+    "ground_line_intercept": 209.27482751411256,
+    "axles": [
+        {
+            "index": 0,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8495055437088013,
+            "position": [
+                112,
+                234
+            ]
+        },
+        {
+            "index": 1,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8055963516235352,
+            "position": [
+                145,
+                242
+            ]
+        },
+        {
+            "index": 2,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8925949335098267,
+            "position": [
+                334,
+                314
+            ]
+        }
+    ],
+    "axle_details": [
+        {
+            "axle_number": 1,
+            "wheels": 1,
+            "confidence": 0.8495055437088013,
+            "status": "No Chao",
+            "position": [
+                112,
+                234
+            ]
+        },
+        {
+            "axle_number": 2,
+            "wheels": 1,
+            "confidence": 0.8055963516235352,
+            "status": "No Chao",
+            "position": [
+                145,
+                242
+            ]
+        },
+        {
+            "axle_number": 3,
+            "wheels": 1,
+            "confidence": 0.8925949335098267,
+            "status": "No Chao",
+            "position": [
+                334,
+                314
+            ]
+        }
+    ],
+    "axles_on_ground": 3,
+    "average_confidence": 0.8492322762807211
+}

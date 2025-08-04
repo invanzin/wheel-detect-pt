@@ -38,7 +38,7 @@ class WheelDetector:
     
     def __init__(
         self,
-        model_path: str = 'runs/detect/wheel-detector-v11n-finetuned/weights/best.pt',
+        model_path: str = 'wheel-detector-v11n-finetuned/weights/best.pt',
         conf_threshold: float = 0.55,
         axle_grouping_threshold: int = 40,
         lifted_axle_threshold: int = 5,
@@ -106,15 +106,12 @@ class WheelDetector:
     
     def _infer_ground_line(self, wheels: List[Wheel]) -> Tuple[float, float]:
         """
-        Infere a linha do chão usando uma abordagem robusta inspirada na
-        estratégia #1 discutida (baseline robusto usando todas as rodas no
-        chão).
-
+        Infere a linha do chão usando TODAS as rodas detectadas.
+        
         Passos:
-        1. Seleciona as 30 % das rodas com a maior coordenada *y* da borda
-           inferior (as rodas mais "baixas" na imagem, portanto mais
-           prováveis de estarem tocando o piso).
-        2. Ajusta uma regressão linear simples (`numpy.polyfit`) sobre esses
+        1. Usa TODAS as rodas para calcular a linha do chão, sem fazer
+           suposições sobre quais estão no chão ou levantadas.
+        2. Ajusta uma regressão linear robusta (RANSAC) sobre todos os
            pontos para obter a reta do chão. Se todas as rodas tiverem
            mesma coordenada *x* (caso extremo) a reta é tratada como
            horizontal.
@@ -128,18 +125,16 @@ class WheelDetector:
             return 0.0, wheels[0].bbox[3] if wheels else 0.0
 
         # -------------------------------------------------------------
-        # 1) Selecionar rodas candidatas ao piso
+        # 1) Usar TODAS as rodas para calcular a linha do chão
         # -------------------------------------------------------------
-        y_bottoms = np.array([w.bbox[3] for w in wheels])
-        num_candidates = max(2, int(len(wheels) * 0.5))  # pelo menos 2 rodas ou 40 %
-        candidate_indices = np.argsort(y_bottoms)[-num_candidates:]
-        candidate_wheels = [wheels[i] for i in candidate_indices]
+        # Não fazemos mais suposições sobre quais rodas estão no chão
+        # Usamos todas as rodas para uma regressão mais robusta
 
         # -------------------------------------------------------------
-        # 2) Ajustar reta y = slope * x + intercept
+        # 2) Ajustar reta y = slope * x + intercept usando TODAS as rodas
         # -------------------------------------------------------------
-        xs = np.array([w.center[0] for w in candidate_wheels], dtype=np.float32)
-        ys = np.array([w.bbox[3] for w in candidate_wheels], dtype=np.float32)
+        xs = np.array([w.center[0] for w in wheels], dtype=np.float32)
+        ys = np.array([w.bbox[3] for w in wheels], dtype=np.float32)
 
         if len(np.unique(xs)) == 1:
             # Pontos todos com o mesmo X → reta horizontal
@@ -170,7 +165,7 @@ class WheelDetector:
 
         logger.info(
             f"Linha do chão (RANSAC): y = {slope:.4f}x + {intercept:.2f} "
-            f"[baseado em {num_candidates} rodas]"
+            f"[baseado em {len(wheels)} rodas]"
         )
         return slope, intercept
 
@@ -339,7 +334,7 @@ class WheelDetector:
         
         return image_with_detections
     
-    def process_image(self, image_path: str, output_dir: str = "runs/detect/wheel_detection", show: bool = True) -> Dict:
+    def process_image(self, image_path: str, output_dir: str = "output", show: bool = True) -> Dict:
         """
         Processa uma imagem para detectar rodas e eixos.
         
@@ -439,7 +434,7 @@ def main():
         "--image-path",
         type=str,
         required=False,
-        default="highway_dataset/images/val/val_00087.jpg",
+        default="images\caminhao\sc_caminhao26_up.jpg",
         help="Caminho para a imagem de entrada a ser processada. Se omitido, usa o valor padrão definido no código."
     )
     parser.add_argument(
@@ -457,7 +452,7 @@ def main():
     parser.add_argument(
         "--save-path",
         type=str,
-        default="runs/detect/wheel_detection",
+        default="output",
         help="Diretório onde os resultados (imagem e JSON) serão salvos."
     )
     parser.add_argument(

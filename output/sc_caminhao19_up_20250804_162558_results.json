@@ -1,0 +1,114 @@
+{
+    "total_axles": 5,
+    "lifted_axles": 1,
+    "total_wheels": 5,
+    "output_path": "output\\sc_caminhao19_up_20250804_162558.jpg",
+    "ground_line_slope": 0.4998453649028678,
+    "ground_line_intercept": 89.76545955393131,
+    "axles": [
+        {
+            "index": 0,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8501394391059875,
+            "position": [
+                823,
+                461
+            ]
+        },
+        {
+            "index": 1,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8494473099708557,
+            "position": [
+                886,
+                489
+            ]
+        },
+        {
+            "index": 2,
+            "wheels": 1,
+            "is_lifted": true,
+            "confidence": 0.827634334564209,
+            "position": [
+                957,
+                508
+            ]
+        },
+        {
+            "index": 3,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8928021192550659,
+            "position": [
+                1236,
+                643
+            ]
+        },
+        {
+            "index": 4,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8925054669380188,
+            "position": [
+                1448,
+                741
+            ]
+        }
+    ],
+    "axle_details": [
+        {
+            "axle_number": 1,
+            "wheels": 1,
+            "confidence": 0.8501394391059875,
+            "status": "No Chao",
+            "position": [
+                823,
+                461
+            ]
+        },
+        {
+            "axle_number": 2,
+            "wheels": 1,
+            "confidence": 0.8494473099708557,
+            "status": "No Chao",
+            "position": [
+                886,
+                489
+            ]
+        },
+        {
+            "axle_number": 3,
+            "wheels": 1,
+            "confidence": 0.827634334564209,
+            "status": "Levantado",
+            "position": [
+                957,
+                508
+            ]
+        },
+        {
+            "axle_number": 4,
+            "wheels": 1,
+            "confidence": 0.8928021192550659,
+            "status": "No Chao",
+            "position": [
+                1236,
+                643
+            ]
+        },
+        {
+            "axle_number": 5,
+            "wheels": 1,
+            "confidence": 0.8925054669380188,
+            "status": "No Chao",
+            "position": [
+                1448,
+                741
+            ]
+        }
+    ],
+    "axles_on_ground": 4,
+    "average_confidence": 0.8625057339668274
+}
