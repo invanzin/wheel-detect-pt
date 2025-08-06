@@ -1,0 +1,74 @@
+{
+    "total_axles": 3,
+    "lifted_axles": 0,
+    "total_wheels": 3,
+    "output_path": "output\\sc_caminhao32_20250805_184001.jpg",
+    "ground_line_slope": 1.1251127184215002,
+    "ground_line_intercept": 55.385705097079914,
+    "axles": [
+        {
+            "index": 0,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.5870679020881653,
+            "position": [
+                494,
+                568
+            ]
+        },
+        {
+            "index": 1,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.7352386116981506,
+            "position": [
+                530,
+                608
+            ]
+        },
+        {
+            "index": 2,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.7701822519302368,
+            "position": [
+                909,
+                982
+            ]
+        }
+    ],
+    "axle_details": [
+        {
+            "axle_number": 1,
+            "wheels": 1,
+            "confidence": 0.5870679020881653,
+            "status": "No Chao",
+            "position": [
+                494,
+                568
+            ]
+        },
+        {
+            "axle_number": 2,
+            "wheels": 1,
+            "confidence": 0.7352386116981506,
+            "status": "No Chao",
+            "position": [
+                530,
+                608
+            ]
+        },
+        {
+            "axle_number": 3,
+            "wheels": 1,
+            "confidence": 0.7701822519302368,
+            "status": "No Chao",
+            "position": [
+                909,
+                982
+            ]
+        }
+    ],
+    "axles_on_ground": 3,
+    "average_confidence": 0.697496255238851
+}

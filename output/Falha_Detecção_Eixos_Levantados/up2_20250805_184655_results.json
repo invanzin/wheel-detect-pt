@@ -1,0 +1,114 @@
+{
+    "total_axles": 5,
+    "lifted_axles": 0,
+    "total_wheels": 5,
+    "output_path": "output\\up2_20250805_184655.jpg",
+    "ground_line_slope": 0.8873903669331016,
+    "ground_line_intercept": 41.018783420097265,
+    "axles": [
+        {
+            "index": 0,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.7382732629776001,
+            "position": [
+                523,
+                469
+            ]
+        },
+        {
+            "index": 1,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.714597225189209,
+            "position": [
+                552,
+                492
+            ]
+        },
+        {
+            "index": 2,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.7476745843887329,
+            "position": [
+                589,
+                513
+            ]
+        },
+        {
+            "index": 3,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8671711683273315,
+            "position": [
+                728,
+                631
+            ]
+        },
+        {
+            "index": 4,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8863871693611145,
+            "position": [
+                859,
+                730
+            ]
+        }
+    ],
+    "axle_details": [
+        {
+            "axle_number": 1,
+            "wheels": 1,
+            "confidence": 0.7382732629776001,
+            "status": "No Chao",
+            "position": [
+                523,
+                469
+            ]
+        },
+        {
+            "axle_number": 2,
+            "wheels": 1,
+            "confidence": 0.714597225189209,
+            "status": "No Chao",
+            "position": [
+                552,
+                492
+            ]
+        },
+        {
+            "axle_number": 3,
+            "wheels": 1,
+            "confidence": 0.7476745843887329,
+            "status": "No Chao",
+            "position": [
+                589,
+                513
+            ]
+        },
+        {
+            "axle_number": 4,
+            "wheels": 1,
+            "confidence": 0.8671711683273315,
+            "status": "No Chao",
+            "position": [
+                728,
+                631
+            ]
+        },
+        {
+            "axle_number": 5,
+            "wheels": 1,
+            "confidence": 0.8863871693611145,
+            "status": "No Chao",
+            "position": [
+                859,
+                730
+            ]
+        }
+    ],
+    "axles_on_ground": 5,
+    "average_confidence": 0.7908206820487976
+}

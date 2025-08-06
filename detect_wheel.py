@@ -7,6 +7,7 @@ import numpy as np
 from ultralytics import YOLO
 import argparse
 import json
+import shutil
 from datetime import datetime
 from sklearn.linear_model import RANSACRegressor, LinearRegression  # regressão robusta
 
@@ -104,7 +105,7 @@ class WheelDetector:
         wheels.sort(key=lambda w: w.center[0])
         return wheels
     
-    def _infer_ground_line(self, wheels: List[Wheel]) -> Tuple[float, float]:
+    def _infer_ground_line(self,     wheels: List[Wheel]) -> Tuple[float, float]:
         """
         Infere a linha do chão usando TODAS as rodas detectadas.
         
@@ -419,12 +420,101 @@ class WheelDetector:
         }
         
         # Salvar resultados em JSON
-        results_path = output_path_dir / f"{Path(image_name).stem}_{timestamp}_results.json"
-        with open(results_path, 'w') as f:
+        json_results_path = output_path_dir / f"{Path(image_name).stem}_{timestamp}_results.json"
+        with open(json_results_path, 'w') as f:
             json.dump(results, f, indent=4)
-        logger.info(f"Resultados salvos em: {results_path}")
+        logger.info(f"Resultados salvos em: {json_results_path}")
+        
+        # Adicionar o caminho do JSON aos resultados
+        results['json_results_path'] = str(json_results_path)
         
         return results
+
+def get_available_categories():
+    """Retorna as categorias disponíveis baseadas nas pastas existentes."""
+    output_dir = Path("output")
+    categories = []
+    
+    if output_dir.exists():
+        for item in output_dir.iterdir():
+            if item.is_dir():
+                categories.append(item.name)
+    
+    # Adicionar categorias padrão se não existirem
+    default_categories = [
+        "Detecção_Rodas",
+        "Falha_Detecção_Rodas", 
+        "Eixo_Levantado",
+        "Falha_Detecção_Eixos_Levantados"
+    ]
+    
+    for cat in default_categories:
+        if cat not in categories:
+            categories.append(cat)
+    
+    return sorted(categories)
+
+def select_output_category():
+    """Permite ao usuário selecionar a categoria de output."""
+    categories = get_available_categories()
+    
+    print("\n" + "="*50)
+    print("CATEGORIAS DISPONÍVEIS:")
+    print("="*50)
+    
+    for i, category in enumerate(categories, 1):
+        print(f"{i:2d}. {category}")
+    
+    print(f"{len(categories) + 1:2d}. Criar nova categoria")
+    print(f"{len(categories) + 2:2d}. Salvar na pasta 'output' (padrão)")
+    
+    while True:
+        try:
+            choice = input(f"\nEscolha uma categoria (1-{len(categories) + 2}): ").strip()
+            choice_num = int(choice)
+            
+            if 1 <= choice_num <= len(categories):
+                return categories[choice_num - 1]
+            elif choice_num == len(categories) + 1:
+                new_category = input("Digite o nome da nova categoria: ").strip()
+                if new_category:
+                    return new_category
+                else:
+                    print("Nome da categoria não pode estar vazio!")
+            elif choice_num == len(categories) + 2:
+                return "output"
+            else:
+                print(f"Por favor, escolha um número entre 1 e {len(categories) + 2}")
+        except ValueError:
+            print("Por favor, digite um número válido!")
+        except KeyboardInterrupt:
+            print("\nOperação cancelada pelo usuário.")
+            return "output"
+
+def move_results_to_category(results_path, json_results_path, category):
+    """Move os arquivos de resultado para a categoria selecionada."""
+    output_dir = Path("output")
+    category_dir = output_dir / category
+    
+    # Criar diretório da categoria se não existir
+    category_dir.mkdir(exist_ok=True)
+    
+    # Mover arquivos
+    files_moved = []
+    
+    # Mover imagem anotada
+    if Path(results_path).exists():
+        new_image_path = category_dir / Path(results_path).name
+        shutil.move(str(results_path), str(new_image_path))
+        files_moved.append(str(new_image_path))
+    
+    # Mover arquivo JSON
+    if Path(json_results_path).exists():
+        new_json_path = category_dir / Path(json_results_path).name
+        shutil.move(str(json_results_path), str(new_json_path))
+        files_moved.append(str(new_json_path))
+    
+    return files_moved
 
 def main():
     """Função principal para executar o detector de rodas a partir da linha de comando."""
@@ -460,6 +550,11 @@ def main():
         action="store_true",
         help="Se incluído, não exibirá a janela com a imagem do resultado."
     )
+    parser.add_argument(
+        "--auto-categorize",
+        action="store_true",
+        help="Se incluído, não perguntará a categoria e salvará diretamente na pasta output."
+    )
     
     args = parser.parse_args()
 
@@ -486,7 +581,7 @@ def main():
             show=False
         )
 
-        # Imprimir resultados no console antes de abrir a janela
+        # Imprimir resultados no console
         print("\n--- Resultados da Análise ---")
         print(f"  Imagem processada: {args.image_path}")
         print(f"  Resultado salvo em: {results['output_path']}")
@@ -499,15 +594,33 @@ def main():
                 f"{axle['status']}"
             )
 
-        # Agora, se solicitado, exibir a imagem anotada
+        # Exibir a imagem anotada ANTES de escolher a categoria
         if show_flag:
             annotated_img = cv2.imread(results['output_path'])
             if annotated_img is None:
                 logger.warning("Não foi possível carregar a imagem anotada para exibição.")
             else:
                 cv2.imshow('Detecção de Rodas e Eixos', annotated_img)
+                print("\nAnálise visual: Pressione qualquer tecla na janela da imagem para continuar...")
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
+
+        # Perguntar categoria de destino (a menos que --auto-categorize seja usado)
+        selected_category = "output"  # valor padrão
+        if not args.auto_categorize:
+            selected_category = select_output_category()
+            
+            if selected_category != "output":
+                # Mover arquivos para a categoria selecionada
+                moved_files = move_results_to_category(
+                    results['output_path'], 
+                    results['json_results_path'], 
+                    selected_category
+                )
+                print(f"\nArquivos movidos para: {selected_category}")
+                print(f"Arquivos: {', '.join(moved_files)}")
+            else:
+                print(f"\nArquivos mantidos em: {results['output_path']}")
 
     except Exception as e:
         logger.error(f"Ocorreu um erro durante o processamento: {e}")
