@@ -445,7 +445,8 @@ def get_available_categories():
         "Detecção_Rodas",
         "Falha_Detecção_Rodas", 
         "Eixo_Levantado",
-        "Falha_Detecção_Eixos_Levantados"
+        "Falha_Detecção_Eixos_Levantados",
+        "Lateral_Cam"
     ]
     
     for cat in default_categories:
@@ -474,7 +475,13 @@ def select_output_category():
             choice_num = int(choice)
             
             if 1 <= choice_num <= len(categories):
-                return categories[choice_num - 1]
+                selected_category = categories[choice_num - 1]
+                
+                # Lógica especial para Lateral_Cam
+                if selected_category == "Lateral_Cam":
+                    return select_lateral_cam_subcategory()
+                
+                return selected_category
             elif choice_num == len(categories) + 1:
                 new_category = input("Digite o nome da nova categoria: ").strip()
                 if new_category:
@@ -491,13 +498,47 @@ def select_output_category():
             print("\nOperação cancelada pelo usuário.")
             return "output"
 
+def select_lateral_cam_subcategory():
+    """Permite ao usuário selecionar a subcategoria da Lateral_Cam."""
+    print("\n" + "="*30)
+    print("SUBCATEGORIA LATERAL_CAM:")
+    print("="*30)
+    print("1. Lateral_Cam/1")
+    print("2. Lateral_Cam/2")
+    print("3. Voltar")
+    
+    while True:
+        try:
+            choice = input("\nEscolha uma subcategoria (1-3): ").strip()
+            choice_num = int(choice)
+            
+            if choice_num == 1:
+                return "Lateral_Cam/1"
+            elif choice_num == 2:
+                return "Lateral_Cam/2"
+            elif choice_num == 3:
+                return select_output_category()  # Volta ao menu principal
+            else:
+                print("Por favor, escolha um número entre 1 e 3")
+        except ValueError:
+            print("Por favor, digite um número válido!")
+        except KeyboardInterrupt:
+            print("\nOperação cancelada pelo usuário.")
+            return "output"
+
 def move_results_to_category(results_path, json_results_path, category):
     """Move os arquivos de resultado para a categoria selecionada."""
     output_dir = Path("output")
-    category_dir = output_dir / category
     
-    # Criar diretório da categoria se não existir
-    category_dir.mkdir(exist_ok=True)
+    # Lidar com subpastas (ex: Lateral_Cam/1)
+    if "/" in category:
+        main_category, subcategory = category.split("/", 1)
+        category_dir = output_dir / main_category / subcategory
+    else:
+        category_dir = output_dir / category
+    
+    # Criar diretório da categoria se não existir (incluindo subpastas)
+    category_dir.mkdir(parents=True, exist_ok=True)
     
     # Mover arquivos
     files_moved = []
@@ -621,6 +662,7 @@ def main():
                 print(f"Arquivos: {', '.join(moved_files)}")
             else:
                 print(f"\nArquivos mantidos em: {results['output_path']}")
+                print("(pasta padrão - não foi necessário mover arquivos)")
 
     except Exception as e:
         logger.error(f"Ocorreu um erro durante o processamento: {e}")

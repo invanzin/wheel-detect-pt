@@ -1,0 +1,12 @@
+{
+    "total_axles": 0,
+    "lifted_axles": 0,
+    "total_wheels": 0,
+    "output_path": "output\\frame_001390_20250814_084200.jpg",
+    "ground_line_slope": 0.0,
+    "ground_line_intercept": 0.0,
+    "axles": [],
+    "axle_details": [],
+    "axles_on_ground": 0,
+    "average_confidence": 0.0
+}

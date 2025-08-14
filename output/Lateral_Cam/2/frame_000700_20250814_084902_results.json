@@ -1,0 +1,54 @@
+{
+    "total_axles": 2,
+    "lifted_axles": 0,
+    "total_wheels": 2,
+    "output_path": "output\\frame_000700_20250814_084902.jpg",
+    "ground_line_slope": 0.34532374100719465,
+    "ground_line_intercept": 141.8057553956833,
+    "axles": [
+        {
+            "index": 0,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.827792227268219,
+            "position": [
+                322,
+                234
+            ]
+        },
+        {
+            "index": 1,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8405212759971619,
+            "position": [
+                461,
+                280
+            ]
+        }
+    ],
+    "axle_details": [
+        {
+            "axle_number": 1,
+            "wheels": 1,
+            "confidence": 0.827792227268219,
+            "status": "No Chao",
+            "position": [
+                322,
+                234
+            ]
+        },
+        {
+            "axle_number": 2,
+            "wheels": 1,
+            "confidence": 0.8405212759971619,
+            "status": "No Chao",
+            "position": [
+                461,
+                280
+            ]
+        }
+    ],
+    "axles_on_ground": 2,
+    "average_confidence": 0.8341567516326904
+}

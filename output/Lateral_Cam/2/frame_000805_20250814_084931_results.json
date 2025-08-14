@@ -1,0 +1,134 @@
+{
+    "total_axles": 6,
+    "lifted_axles": 0,
+    "total_wheels": 6,
+    "output_path": "output\\frame_000805_20250814_084931.jpg",
+    "ground_line_slope": 0.22940991455621013,
+    "ground_line_intercept": 101.70537344059241,
+    "axles": [
+        {
+            "index": 0,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.732450008392334,
+            "position": [
+                101,
+                106
+            ]
+        },
+        {
+            "index": 1,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.6888466477394104,
+            "position": [
+                124,
+                111
+            ]
+        },
+        {
+            "index": 2,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.7996568083763123,
+            "position": [
+                146,
+                113
+            ]
+        },
+        {
+            "index": 3,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8427489995956421,
+            "position": [
+                313,
+                149
+            ]
+        },
+        {
+            "index": 4,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8579426407814026,
+            "position": [
+                355,
+                156
+            ]
+        },
+        {
+            "index": 5,
+            "wheels": 1,
+            "is_lifted": false,
+            "confidence": 0.8704589605331421,
+            "position": [
+                490,
+                189
+            ]
+        }
+    ],
+    "axle_details": [
+        {
+            "axle_number": 1,
+            "wheels": 1,
+            "confidence": 0.732450008392334,
+            "status": "No Chao",
+            "position": [
+                101,
+                106
+            ]
+        },
+        {
+            "axle_number": 2,
+            "wheels": 1,
+            "confidence": 0.6888466477394104,
+            "status": "No Chao",
+            "position": [
+                124,
+                111
+            ]
+        },
+        {
+            "axle_number": 3,
+            "wheels": 1,
+            "confidence": 0.7996568083763123,
+            "status": "No Chao",
+            "position": [
+                146,
+                113
+            ]
+        },
+        {
+            "axle_number": 4,
+            "wheels": 1,
+            "confidence": 0.8427489995956421,
+            "status": "No Chao",
+            "position": [
+                313,
+                149
+            ]
+        },
+        {
+            "axle_number": 5,
+            "wheels": 1,
+            "confidence": 0.8579426407814026,
+            "status": "No Chao",
+            "position": [
+                355,
+                156
+            ]
+        },
+        {
+            "axle_number": 6,
+            "wheels": 1,
+            "confidence": 0.8704589605331421,
+            "status": "No Chao",
+            "position": [
+                490,
+                189
+            ]
+        }
+    ],
+    "axles_on_ground": 6,
+    "average_confidence": 0.7986840109030405
+}
