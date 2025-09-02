@@ -1,0 +1,3 @@
+"""
+Exceções customizadas do sistema.
+"""
